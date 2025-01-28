@@ -11,8 +11,10 @@ local configs = {
 }
 
 local function is_blank_line()
-    local line, _col = unpack(vim.api.nvim_win_get_cursor(0))
-    return vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:match("%S") == nil
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local current_line = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+    local left_of_cursor = current_line:sub(1, col)
+    return left_of_cursor:match("^%s*$") ~= nil
 end
 
 ---@param node_type string
